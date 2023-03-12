@@ -1,8 +1,8 @@
-console.log("coucou");
+const prompt = require ( 'prompt-sync' ) ( ) ;
 
 var puissance4 = [];
-var nbColonne = 7;
-var nbLigne = 6;
+var nbColonne = 6;
+var nbLigne = 7;
 var joueur1Car = "x";
 var joueur2Car = "o";
 
@@ -11,8 +11,6 @@ puissance4 = initialiserTableauVide(nbLigne, nbColonne, 0);
 //console.log(puissance4);
 
 initialiserTableauVide()
-puissance4[3][0] = 1;
-puissance4[3][1] = 2;
 afficherPuissance4(puissance4, joueur1Car, joueur2Car);
 
 while(true){
@@ -25,19 +23,54 @@ while(true){
     if(jouerCase(2)){
         pasTermine = true;
         console.log("Le joueur 2 a gagné");
-
         return;
     }
     
 }
 
 function jouerCase(joueur){
-    console.log("Le joueur %d joue ", joueur);
-    if(joueur === 2){
-        return true;
+    var ligneVide = -1;
+    var colonne = -1;
+    while(ligneVide === -1 || colonne <= 0 || colonne > 7){
+        console.log("Choisir une colonne à un emplacement vide");
+        var colonne = saisirColonne();
+        console.log("ttttttttt: " + colonne);
+        //on recupere la ligne de la colonne choisie
+        var ligneVide = retournerLigneCaseVideColonne(colonne);
     }
-    return false;
+   
+   //on met le joueur dans la colonne choisie
+   puissance4[ligneVide][colonne-1] = joueur ;
+   afficherPuissance4(puissance4, joueur1Car, joueur2Car);
+   return verificationFinJeu();
 }
+
+/**
+ * Fonction permettant de saisir une colonne
+ * @returns int
+ */
+function saisirColonne(){
+   
+    return parseInt(prompt("Quelle colonne ? "));
+   
+}
+
+/**
+ * 
+ * @returns int
+ */
+function retournerLigneCaseVideColonne(){
+    return 5;
+}
+
+/**
+ * 
+ * @returns Boolen
+ */
+ function verificationFinJeu(){
+    return true;
+}
+
 
 /**
  * permet d'initiliser un tableau à  multiple dimesnsion en fonction des parametre "nombre de ligne" et "nombre de colonne"
